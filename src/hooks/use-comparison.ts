@@ -30,46 +30,45 @@ export function useComparison() {
 
   const addToComparison = useCallback(
     (vehicleId: string) => {
-      setComparison((prev) => {
-        if (prev.includes(vehicleId)) {
-          toast({
-            title: 'Already in comparison',
-            description: 'This vehicle is already in your comparison list.',
-            variant: 'default',
-          });
-          return prev;
-        }
-        if (prev.length >= 4) {
-          toast({
-            title: 'Comparison list full',
-            description: 'You can compare a maximum of 4 vehicles at a time.',
-            variant: 'destructive',
-          });
-          return prev;
-        }
-        const newComparison = [...prev, vehicleId];
-        updateLocalStorage(newComparison);
+      if (comparison.includes(vehicleId)) {
         toast({
-          title: 'Added to comparison',
-          description: 'The vehicle has been added to your comparison list.',
+          title: 'Already in comparison',
+          description: 'This vehicle is already in your comparison list.',
+          variant: 'default',
         });
-        return newComparison;
+        return;
+      }
+      if (comparison.length >= 4) {
+        toast({
+          title: 'Comparison list full',
+          description: 'You can compare a maximum of 4 vehicles at a time.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      const newComparison = [...comparison, vehicleId];
+      setComparison(newComparison);
+      updateLocalStorage(newComparison);
+      toast({
+        title: 'Added to comparison',
+        description: 'The vehicle has been added to your comparison list.',
       });
     },
-    [toast]
+    [comparison, toast]
   );
 
-  const removeFromComparison = useCallback((vehicleId: string) => {
-    setComparison((prev) => {
-      const newComparison = prev.filter((id) => id !== vehicleId);
+  const removeFromComparison = useCallback(
+    (vehicleId: string) => {
+      const newComparison = comparison.filter((id) => id !== vehicleId);
+      setComparison(newComparison);
       updateLocalStorage(newComparison);
       toast({
         title: 'Removed from comparison',
         description: 'The vehicle has been removed from your list.',
       });
-      return newComparison;
-    });
-  }, [toast]);
+    },
+    [comparison, toast]
+  );
 
   const clearComparison = useCallback(() => {
     setComparison([]);
