@@ -1,3 +1,88 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero",
+      "description": "A sleek modern car on a scenic road at sunset",
+      "imageUrl": "https://images.unsplash.com/photo-1616932284498-52d1b727ae74?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxtb2Rlcm4lMjBjYXJ8ZW58MHx8fHwxNzY4OTUyNDA2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "modern car"
+    },
+    {
+      "id": "scooter",
+      "description": "A stylish scooter parked in a city street",
+      "imageUrl": "https://images.unsplash.com/photo-1755858016939-a507d95259fc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2l0eSUyMHNjb290ZXJ8ZW58MHx8fHwxNzY4OTE1NTU5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city scooter"
+    },
+    {
+      "id": "motorcycle",
+      "description": "A powerful motorcycle on a winding road",
+      "imageUrl": "https://images.unsplash.com/photo-1761227762820-d90a321e1101?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxjcnVpc2VyJTIwbW90b3JjeWNsZXxlbnwwfHx8fDE3NjkwMDAxNjV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cruiser motorcycle"
+    },
+    {
+      "id": "motorcycle-2",
+      "description": "A sporty motorcycle parked with a city background",
+      "imageUrl": "https://images.unsplash.com/photo-1726737575790-81d95d92754c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxzcG9ydCUyMG1vdG9yY3ljbGV8ZW58MHx8fHwxNzY5MDAwMTY1fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sport motorcycle"
+    },
+    {
+      "id": "motorcycle-3",
+      "description": "A red and black motorcycle",
+      "imageUrl": "https://images.unsplash.com/photo-1711435470785-4e1146a16dcc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxyZWQlMjBtb3RvcmN5Y2xlfGVufDB8fHx8MTc2OTAwOTg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "red motorcycle"
+    },
+    {
+      "id": "auto-rickshaw",
+      "description": "An auto-rickshaw in a busy Indian street",
+      "imageUrl": "https://images.unsplash.com/photo-1626149637281-4e227308da18?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhdXRvJTIwcmlja3NoYXd8ZW58MHx8fHwxNzY5MDA5ODcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "auto rickshaw"
+    },
+    {
+      "id": "auto-rickshaw-2",
+      "description": "A yellow and green auto-rickshaw",
+      "imageUrl": "https://images.unsplash.com/photo-1760818860357-72a6160ec23a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHx5ZWxsb3clMjByaWNrc2hhd3xlbnwwfHx8fDE3NjkwMDk4NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "yellow rickshaw"
+    },
+    {
+      "id": "suv",
+      "description": "A modern SUV on an adventurous off-road trail",
+      "imageUrl": "https://images.unsplash.com/photo-1684849311731-eb8293657d7e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3aGl0ZSUyMHN1dnxlbnwwfHx8fDE3NjkwMDY5MDB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "white suv"
+    },
+    {
+      "id": "suv-2",
+      "description": "A family SUV parked in a suburban driveway",
+      "imageUrl": "https://images.unsplash.com/photo-1645791608306-6db92b84d498?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxibGFjayUyMHN1dnxlbnwwfHx8fDE3Njg5NTI0MDZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "black suv"
+    },
+    {
+      "id": "suv-3",
+      "description": "An off-road capable SUV on a rocky terrain",
+      "imageUrl": "https://images.unsplash.com/photo-1564569722474-5728b215867e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxvZmZyb2FkJTIwc3V2fGVufDB8fHx8MTc2OTAwOTg3Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "offroad suv"
+    },
+    {
+      "id": "suv-4",
+      "description": "A blue electric SUV charging",
+      "imageUrl": "https://images.unsplash.com/photo-1571987502227-9231b837d92a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxlbGVjdHJpYyUyMGNhcnxlbnwwfHx8fDE3Njg5ODg0OTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "electric car"
+    },
+    {
+      "id": "hatchback",
+      "description": "A compact hatchback car perfect for city driving",
+      "imageUrl": "https://images.unsplash.com/photo-1541945503710-82ad4425a126?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaXR5JTIwY2FyfGVufDB8fHx8MTc2ODk5MzU3OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "city car"
+    },
+    {
+      "id": "truck",
+      "description": "A large commercial truck on a highway",
+      "imageUrl": "https://images.unsplash.com/photo-1665521032636-e8d2f6927053?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkZWxpdmVyeSUyMHRydWNrfGVufDB8fHx8MTc2ODkxMTA2OHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "delivery truck"
+    },
+    {
+      "id": "truck-2",
+      "description": "A heavy-duty six-wheeler truck at a construction site",
+      "imageUrl": "https://images.unsplash.com/photo-1751054631354-a42bd7609d75?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y29uc3RydWN0aW9uJTIwdHJ1Y2t8ZW58MHx8fHwxNzY5MDA5ODcyfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "construction truck"
+    }
+  ]
 }
