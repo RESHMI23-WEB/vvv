@@ -1,5 +1,5 @@
 'use client';
-import { notFound } from 'next/navigation';
+import { notFound, useParams } from 'next/navigation';
 import Image from 'next/image';
 import { vehicles } from '@/lib/data';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -20,7 +20,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function VehicleDetailPage({ params }: { params: { id: string } }) {
+export default function VehicleDetailPage() {
+  const params = useParams<{ id: string }>();
   const vehicle = vehicles.find((v) => v.id === params.id);
   const { addToComparison } = useComparison();
 
