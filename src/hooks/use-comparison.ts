@@ -23,60 +23,71 @@ export function useComparison() {
   const updateLocalStorage = (items: string[]) => {
     try {
       window.localStorage.setItem(COMPARISON_KEY, JSON.stringify(items));
-    } catch (error) {
+    } catch (error)
+      {
       console.error('Failed to write to localStorage', error);
     }
   };
 
   const addToComparison = useCallback(
     (vehicleId: string) => {
-      if (comparison.includes(vehicleId)) {
+      setComparison((currentComparison) => {
+        if (currentComparison.includes(vehicleId)) {
+          toast({
+            title: 'Already in comparison',
+            description: 'This vehicle is already in your comparison list.',
+            variant: 'default',
+          });
+          return currentComparison;
+        }
+        if (currentComparison.length >= 4) {
+          toast({
+            title: 'Comparison list full',
+            description: 'You can compare a maximum of 4 vehicles at a time.',
+            variant: 'destructive',
+          });
+          return currentComparison;
+        }
+        const newComparison = [...currentComparison, vehicleId];
+        updateLocalStorage(newComparison);
         toast({
-          title: 'Already in comparison',
-          description: 'This vehicle is already in your comparison list.',
-          variant: 'default',
+          title: 'Added to comparison',
+          description: 'The vehicle has been added to your comparison list.',
         });
-        return;
-      }
-      if (comparison.length >= 4) {
-        toast({
-          title: 'Comparison list full',
-          description: 'You can compare a maximum of 4 vehicles at a time.',
-          variant: 'destructive',
-        });
-        return;
-      }
-      const newComparison = [...comparison, vehicleId];
-      setComparison(newComparison);
-      updateLocalStorage(newComparison);
-      toast({
-        title: 'Added to comparison',
-        description: 'The vehicle has been added to your comparison list.',
+        return newComparison;
       });
     },
-    [comparison, toast]
+    [toast]
   );
 
   const removeFromComparison = useCallback(
     (vehicleId: string) => {
-      const newComparison = comparison.filter((id) => id !== vehicleId);
-      setComparison(newComparison);
-      updateLocalStorage(newComparison);
-      toast({
-        title: 'Removed from comparison',
-        description: 'The vehicle has been removed from your list.',
+      setComparison((currentComparison) => {
+        const newComparison = currentComparison.filter((id) => id !== vehicleId);
+        if (newComparison.length < currentComparison.length) {
+          updateLocalStorage(newComparison);
+          toast({
+            title: 'Removed from comparison',
+            description: 'The vehicle has been removed from your list.',
+          });
+        }
+        return newComparison;
       });
     },
-    [comparison, toast]
+    [toast]
   );
 
   const clearComparison = useCallback(() => {
-    setComparison([]);
-    updateLocalStorage([]);
-     toast({
-        title: 'Comparison cleared',
-        description: 'Your comparison list has been cleared.',
-      });
+    setComparison((currentComparison) => {
+      if (currentComparison.length > 0) {
+        updateLocalStorage([]);
+        toast({
+          title: 'Comparison cleared',
+          description: 'Your comparison list has been cleared.',
+        });
+      }
+      return [];
+    });
   }, [toast]);
 
   return { comparison, addToComparison, removeFromComparison, clearComparison };
