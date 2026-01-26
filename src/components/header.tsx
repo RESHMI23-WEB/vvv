@@ -8,6 +8,7 @@ const navLinks = [
   { href: '/', label: 'Home' },
   { href: '/vehicles', label: 'Vehicles' },
   { href: '/compare', label: 'Compare' },
+  { href: '/3d-view', label: '3D View' },
 ];
 
 export default function Header() {
