@@ -1,8 +1,6 @@
 'use client';
 import { notFound, useParams } from 'next/navigation';
-import Image from 'next/image';
 import { vehicles } from '@/lib/data';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -19,6 +17,8 @@ import {
   ChevronsRight
 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 export default function VehicleDetailPage() {
   const params = useParams<{ id: string }>();
@@ -28,8 +28,9 @@ export default function VehicleDetailPage() {
   if (!vehicle) {
     notFound();
   }
-
+  
   const image = PlaceHolderImages.find((img) => img.id === vehicle.imageId);
+
   const specs = [
     { icon: IndianRupee, label: 'Price', value: `₹ ${vehicle.price.toLocaleString('en-IN')}` },
     { icon: Car, label: 'Engine', value: `${vehicle.engineCapacity} cc` },
@@ -48,7 +49,7 @@ export default function VehicleDetailPage() {
       </Button>
       <Card className="overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2">
-          <div className="relative aspect-video w-full">
+          <div className="relative aspect-video w-full bg-muted">
             {image ? (
               <Image
                 src={image.imageUrl}
@@ -58,11 +59,9 @@ export default function VehicleDetailPage() {
                 className="object-cover"
               />
             ) : (
-              <div className="flex items-center justify-center h-full bg-muted">
-                <span className="text-muted-foreground">No Image Available</span>
-              </div>
+              <div className="bg-muted h-full w-full" />
             )}
-             <div className="absolute top-4 left-4">
+             <div className="absolute top-4 left-4 z-10">
               <Badge variant="secondary" className="text-lg py-1 px-3">{vehicle.type}</Badge>
             </div>
           </div>
@@ -76,7 +75,6 @@ export default function VehicleDetailPage() {
               </CardHeader>
 
               <CardContent className="p-0 mt-6">
-                 <p className="text-lg text-muted-foreground mb-6">This space is reserved for an interactive 3D model of the vehicle, allowing rotation, zoom, and pan controls for a fully immersive experience.</p>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-6">
                   {specs.map((spec) => (
                     <div key={spec.label} className="flex items-center gap-3">
