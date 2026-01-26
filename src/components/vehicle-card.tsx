@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Fuel, Gauge, IndianRupee, Users, Plus } from 'lucide-react';
+import { Fuel, Gauge, IndianRupee, Users, Plus, Cube } from 'lucide-react';
 import type { Vehicle } from '@/lib/types';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
@@ -66,13 +66,18 @@ export default function VehicleCard({ vehicle, onAddToComparison }: VehicleCardP
           </div>
         </div>
       </CardContent>
-      <CardFooter className="p-4 pt-0">
+      <CardFooter className="p-4 pt-0 grid grid-cols-2 gap-2">
         <Button
           variant="outline"
           className="w-full"
           onClick={() => onAddToComparison(vehicle.id)}
         >
           <Plus className="mr-2 h-4 w-4" /> Add to Compare
+        </Button>
+         <Button asChild className="w-full">
+            <Link href="/3d-view">
+                <Cube className="mr-2 h-4 w-4" /> 3D View
+            </Link>
         </Button>
       </CardFooter>
     </Card>
