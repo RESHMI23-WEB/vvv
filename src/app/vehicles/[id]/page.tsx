@@ -15,7 +15,7 @@ import {
   Plus,
   ArrowLeft,
   ChevronsRight,
-  Cube,
+  Box,
 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -97,7 +97,7 @@ export default function VehicleDetailPage() {
                 <Link href="/compare"><ChevronsRight className="mr-2 h-4 w-4" />Go to Comparison</Link>
               </Button>
               <Button size="lg" variant="secondary" asChild>
-                <Link href="/3d-view"><Cube className="mr-2 h-4 w-4" />View in 3D</Link>
+                <Link href="/3d-view"><Box className="mr-2 h-4 w-4" />View in 3D</Link>
               </Button>
             </div>
           </div>
