@@ -106,56 +106,60 @@ const ToastContext = React.createContext<{
   toasts: ToasterToast[]
 } | undefined>(undefined)
 
-
 export function useToast() {
   const context = React.useContext(ToastContext)
+
   if (context === undefined) {
     throw new Error("useToast must be used within a ToastProvider")
   }
+
   return context
 }
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = React.useReducer(reducer, { toasts: [] });
-  const toastTimeouts = React.useRef(new Map<string, ReturnType<typeof setTimeout>>());
+  const [state, dispatch] = React.useReducer(reducer, { toasts: [] })
+  const toastTimeouts = React.useRef(new Map<string, ReturnType<typeof setTimeout>>())
 
   React.useEffect(() => {
     state.toasts.forEach((t) => {
       if (t.open === false && !toastTimeouts.current.has(t.id)) {
         const timeout = setTimeout(() => {
-          dispatch({ type: 'REMOVE_TOAST', toastId: t.id });
-          toastTimeouts.current.delete(t.id);
-        }, TOAST_REMOVE_DELAY);
-        toastTimeouts.current.set(t.id, timeout);
+          dispatch({ type: 'REMOVE_TOAST', toastId: t.id })
+          toastTimeouts.current.delete(t.id)
+        }, TOAST_REMOVE_DELAY)
+        toastTimeouts.current.set(t.id, timeout)
       }
-    });
+    })
 
     return () => {
-      toastTimeouts.current.forEach((timeout) => clearTimeout(timeout));
-    };
-  }, [state]);
+      toastTimeouts.current.forEach((timeout) => clearTimeout(timeout))
+    }
+  }, [state])
 
-  const toast = React.useCallback(({ ...props }: Toast) => {
-    const id = genId()
+  const toast = React.useCallback(
+    ({ ...props }: Toast) => {
+      const id = genId()
 
-    dispatch({
-      type: "ADD_TOAST",
-      toast: {
-        ...props,
-        id,
-        open: true,
-        onOpenChange: (open) => {
-          if (!open) {
-            dispatch({ type: "DISMISS_TOAST", toastId: id })
-          }
+      dispatch({
+        type: "ADD_TOAST",
+        toast: {
+          ...props,
+          id,
+          open: true,
+          onOpenChange: (open) => {
+            if (!open) {
+              dispatch({ type: "DISMISS_TOAST", toastId: id })
+            }
+          },
         },
-      },
-    })
-  }, []);
+      })
+    },
+    []
+  )
 
   const dismiss = React.useCallback((toastId?: string) => {
     dispatch({ type: "DISMISS_TOAST", toastId })
-  }, []);
+  }, [])
 
   return (
     <ToastContext.Provider value={{ toasts: state.toasts, toast, dismiss }}>
