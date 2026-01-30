@@ -1,5 +1,9 @@
 "use client"
 
+// This is a refactored version inspired by the original shadcn/ui `use-toast` hook
+// to solve the JSX parsing error in a .ts file. It avoids using React Context
+// and manages state with a simple listener pattern.
+
 import * as React from "react"
 import type {
   ToastActionElement,
@@ -54,7 +58,25 @@ interface State {
   toasts: ToasterToast[]
 }
 
-const reducer = (state: State, action: Action): State => {
+const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>()
+
+const addToRemoveQueue = (toastId: string) => {
+  if (toastTimeouts.has(toastId)) {
+    return
+  }
+
+  const timeout = setTimeout(() => {
+    toastTimeouts.delete(toastId)
+    dispatch({
+      type: "REMOVE_TOAST",
+      toastId: toastId,
+    })
+  }, TOAST_REMOVE_DELAY)
+
+  toastTimeouts.set(toastId, timeout)
+}
+
+export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "ADD_TOAST":
       return {
@@ -72,6 +94,15 @@ const reducer = (state: State, action: Action): State => {
 
     case "DISMISS_TOAST": {
       const { toastId } = action
+
+      if (toastId) {
+        addToRemoveQueue(toastId)
+      } else {
+        state.toasts.forEach((toast) => {
+          addToRemoveQueue(toast.id)
+        })
+      }
+
       return {
         ...state,
         toasts: state.toasts.map((t) =>
@@ -95,50 +126,43 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         toasts: state.toasts.filter((t) => t.id !== action.toastId),
       }
+    default:
+        return state;
+  }
+}
+
+const listeners: Array<(state: State) => void> = []
+
+let memoryState: State = { toasts: [] }
+
+function dispatch(action: Action) {
+  memoryState = reducer(memoryState, action)
+  for (const listener of listeners) {
+    listener(memoryState)
   }
 }
 
 type Toast = Omit<ToasterToast, "id">
 
-const ToastContext = React.createContext<{
-  toast: (props: Toast) => void
-  dismiss: (toastId?: string) => void
-  toasts: ToasterToast[]
-} | undefined>(undefined)
-
 export function useToast() {
-  const context = React.useContext(ToastContext)
-
-  if (context === undefined) {
-    throw new Error("useToast must be used within a ToastProvider")
-  }
-
-  return context
-}
-
-export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = React.useReducer(reducer, { toasts: [] })
-  const toastTimeouts = React.useRef(new Map<string, ReturnType<typeof setTimeout>>())
+  const [state, setState] = React.useState<State>(memoryState)
 
   React.useEffect(() => {
-    state.toasts.forEach((t) => {
-      if (t.open === false && !toastTimeouts.current.has(t.id)) {
-        const timeout = setTimeout(() => {
-          dispatch({ type: 'REMOVE_TOAST', toastId: t.id })
-          toastTimeouts.current.delete(t.id)
-        }, TOAST_REMOVE_DELAY)
-        toastTimeouts.current.set(t.id, timeout)
-      }
-    })
-
+    listeners.push(setState)
     return () => {
-      toastTimeouts.current.forEach((timeout) => clearTimeout(timeout))
+      const index = listeners.indexOf(setState)
+      if (index > -1) {
+        listeners.splice(index, 1)
+      }
     }
   }, [state])
 
-  const toast = React.useCallback(
-    ({ ...props }: Toast) => {
+  return {
+    ...state,
+    toast: (props: Toast) => {
       const id = genId()
+      
+      const dismiss = () => dispatch({ type: "DISMISS_TOAST", toastId: id });
 
       dispatch({
         type: "ADD_TOAST",
@@ -147,23 +171,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           id,
           open: true,
           onOpenChange: (open) => {
-            if (!open) {
-              dispatch({ type: "DISMISS_TOAST", toastId: id })
-            }
+            if (!open) dismiss()
           },
         },
       })
     },
-    []
-  )
-
-  const dismiss = React.useCallback((toastId?: string) => {
-    dispatch({ type: "DISMISS_TOAST", toastId })
-  }, [])
-
-  return (
-    <ToastContext.Provider value={{ toasts: state.toasts, toast, dismiss }}>
-      {children}
-    </ToastContext.Provider>
-  )
+    dismiss: (toastId?: string) => dispatch({ type: "DISMISS_TOAST", toastId }),
+  }
 }

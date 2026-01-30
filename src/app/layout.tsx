@@ -4,7 +4,6 @@ import { Toaster } from '@/components/ui/toaster';
 import Header from '@/components/header';
 import { cn } from '@/lib/utils';
 import { Inter } from 'next/font/google';
-import { ToastProvider } from '@/hooks/use-toast';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -31,13 +30,11 @@ export default function RootLayout({
           inter.variable
         )}
       >
-        <ToastProvider>
-          <div className="relative flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-          </div>
-          <Toaster />
-        </ToastProvider>
+        <div className="relative flex min-h-screen flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+        </div>
+        <Toaster />
       </body>
     </html>
   );
